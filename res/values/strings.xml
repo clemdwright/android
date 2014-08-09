@@ -4,6 +4,8 @@
     <string name="app_name">Tastebuds</string>
     <string name="place_details_name">Place Details</string>
     <string name="place_name">Monk\'s Kettle</string>
+    <string name="place_numbers">★★★★★&#160;&#160;$$$$&#160;&#160;25.2mi</string>
+    <string name="place_ratings">❤13&#160;&#160;√18&#160;&#160;+12</string>
     <string name="action_settings">Settings</string>
     <string name="content_description">Place Image</string>
 
