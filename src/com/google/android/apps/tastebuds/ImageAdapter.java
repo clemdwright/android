@@ -57,20 +57,33 @@ public class ImageAdapter extends BaseAdapter {
 		ImageView imageView;
 		if (convertView == null) { // create a new view if no recycling
 									// available
+//			Log.i("ImageAdapter", "convertView == null. no recycling available. creating new view.");
 			imageView = new ImageView(context);
 		} else {
 			imageView = (ImageView) convertView;
+//			Log.i("ImageAdapter", "convertView != null. recycling old view.");
 		}
 		if (position >= imageUrls.size()) { // data not yet downloaded!
+//			Log.i("ImageAdapter", "data not yet downloaded");
 			return imageView;
 		}
 		String imageUrl = imageUrls.get(position);
 
 		Bitmap bitmap = imageCache.get(imageUrl);
 		if (bitmap != null) {
+			
+//			Log.i("ImageAdapter", "bitmap != null. image cached. setting image.");
+			
 			imageView.setImageBitmap(bitmap);
 		} else {
+			
+			Log.i("ImageAdapter", "bitmap == null. image not cached. checking if downloading.");
+			Log.i("ImageAdapter", "uncached imageURL: " + imageUrl);
+			
 			if (!downloadingImageUrls.contains(imageUrl)) {
+				
+				Log.i("ImageAdapter", "!downloadingImageUrls.contains(imageUrl). downloading image. position: " + position);
+				
 				downloadingImageUrls.add(imageUrl);
 				new DownloadImageAsyncTask(imageUrl).execute();
 			}
@@ -97,6 +110,11 @@ public class ImageAdapter extends BaseAdapter {
 				Bitmap bitmap = BitmapFactory
 						.decodeStream((InputStream) new URL(imageUrl)
 								.getContent());
+				
+				Log.i("ImageAdapter", "caching imageURL: " + imageUrl);
+				Log.i("ImageAdapter", "lrucache size: " + imageCache.size());
+				
+				
 				imageCache.put(imageUrl, bitmap);
 			} catch (IOException e) {
 				Log.e("DownloadImageAsyncTask", "Error reading bitmap", e);

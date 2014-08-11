@@ -20,14 +20,12 @@ public class JsonParser {
 	}
 	
 	private static final String API_KEY = "AIzaSyDSxGRYQXuA7qy3Rzcu1zILt2hAqbNcHaM";
-	private String photoRequestOne = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=100&photoreference=";
+	private String photoRequestOne = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=120&photoreference=";
 	private String photoRequestTwo = "&key=";
 	
 
 	
-	private static final String PLACE_FEED_URL = "https://maps.googleapis.com/"
-	+ "maps/api/place/nearbysearch/json?location=37.760107,-122.425908" 
-	+ "&radius=500&types=food&key=AIzaSyDSxGRYQXuA7qy3Rzcu1zILt2hAqbNcHaM";
+
 
 	protected String getJsonAsString() throws IOException {
 		InputStream stream = new URL(PLACE_FEED_URL).openConnection().getInputStream();
@@ -40,6 +38,10 @@ public class JsonParser {
 		}
 		return result.toString();
 	}
+	
+	private static final String PLACE_FEED_URL = "https://maps.googleapis.com/"
+	+ "maps/api/place/nearbysearch/json?location=37.760107,-122.425908" 
+	+ "&radius=500&types=food&key=AIzaSyDSxGRYQXuA7qy3Rzcu1zILt2hAqbNcHaM";
 	
 	public void parse(final ParseCompleteCallback parseCompleteCallback) {
 		new AsyncTask<Void, Void, List<String>>() {
