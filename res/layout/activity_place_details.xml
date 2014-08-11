@@ -16,9 +16,10 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp" >
+        android:padding="@dimen/activity_horizontal_margin" >
 
         <LinearLayout
+            android:id="@+id/place_summary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -26,56 +27,64 @@
 
             <ImageView
                 android:id="@+id/place_thumbnail"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/content_description"
                 android:scaleType="fitCenter"
                 android:src="@drawable/place_thumbnail" />
 
             <LinearLayout
+                android:id="@+id/place_summary_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:orientation="vertical"
-                android:paddingLeft="12dp" >
+                android:paddingLeft="@dimen/activity_horizontal_margin" >
 
                 <TextView
+                    android:id="@+id/place_summary_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/place_name"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/large_font_size"
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/place_summary_numbers"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/place_numbers"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/small_font_size" />
 
                 <TextView
+                    android:id="@+id/place_summary_ratings"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/place_ratings"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/small_font_size" />
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/place_ratings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_gravity="center_vertical"
+            android:layout_centerVertical="true"
             android:orientation="horizontal" >
 
             <RadioButton
                 android:id="@+id/radioButton1"
-                android:layout_width="48dp"
-                android:layout_height="48dp" />
+                android:layout_width="@dimen/button_width"
+                android:layout_height="@dimen/button_width"
+                android:background="@color/green" />
 
             <RadioButton
                 android:id="@+id/radioButton2"
-                android:layout_width="48dp"
-                android:layout_height="48dp" />
+                android:layout_width="@dimen/button_width"
+                android:layout_height="@dimen/button_width"
+                android:background="@color/blue" />
         </LinearLayout>
     </RelativeLayout>
 
