@@ -13,7 +13,7 @@ import android.widget.ListView;
 
 public class NearbyPlacesActivity extends ActionBarActivity {
 
-	private PlaceAdapter adapter;
+	private ImageAdapter adapter;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +21,7 @@ public class NearbyPlacesActivity extends ActionBarActivity {
         setContentView(R.layout.activity_nearby_places);
         
         ListView listView = (ListView) findViewById(R.id.listView);
-        adapter = new PlaceAdapter(this);
+        adapter = new ImageAdapter(this);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
         	

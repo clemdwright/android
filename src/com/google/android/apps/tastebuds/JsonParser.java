@@ -20,23 +20,15 @@ public class JsonParser {
 	}
 	
 	private static final String API_KEY = "AIzaSyDSxGRYQXuA7qy3Rzcu1zILt2hAqbNcHaM";
-	private String photoRequestOne = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=";
+	private String photoRequestOne = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=100&photoreference=";
 	private String photoRequestTwo = "&key=";
 	
 
 	
 	private static final String PLACE_FEED_URL = "https://maps.googleapis.com/"
-	+ "maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362" 
-	+ "&radius=500&types=food&name=cruise&key=AIzaSyDSxGRYQXuA7qy3Rzcu1zILt2hAqbNcHaM";
-	
-//	private static final String PLACE_FEED_URL = "https://picasaweb.google.com/"
-//		      + "data/feed/base/user/"
-//		      + "116526417878498972096/albumid/5750911813501865489?kind=photo"
-//		      + "&authkey=Gv1sRgCIHapMbBmI-VuAE&alt=json"
-//		      + "&fields=entry(media:group(media:content,media:thumbnail))";
-	
-//	https://picasaweb.google.com/data/feed/base/user/116526417878498972096/albumid/5750911813501865489?kind=photo&authkey=Gv1sRgCIHapMbBmI-VuAE&alt=json&fields=entry(media:group(media:content,media:thumbnail))
-	
+	+ "maps/api/place/nearbysearch/json?location=37.760107,-122.425908" 
+	+ "&radius=500&types=food&key=AIzaSyDSxGRYQXuA7qy3Rzcu1zILt2hAqbNcHaM";
+
 	protected String getJsonAsString() throws IOException {
 		InputStream stream = new URL(PLACE_FEED_URL).openConnection().getInputStream();
 		BufferedReader reader = new BufferedReader(
@@ -55,24 +47,26 @@ public class JsonParser {
 			@Override
 			protected List<String> doInBackground(Void... params) {
 				try {
-					
-					List<String> result = new ArrayList<String>();
+
 					JSONObject feed = new JSONObject(getJsonAsString());
 					JSONArray places = feed.getJSONArray("results");
-					JSONObject firstPlace = places.getJSONObject(0);
-					JSONArray photos = firstPlace.getJSONArray("photos");
-					JSONObject firstPhoto = photos.getJSONObject(0);
-					String photoReference = firstPhoto.getString("photo_reference");
+					List<String> result = new ArrayList<String>();
 					
-					String photoUrl = photoRequestOne + photoReference + photoRequestTwo + API_KEY;
-
-					result.add(photoUrl);
+					for (int i = 0; i < places.length(); i++) {
+						JSONObject place = places.getJSONObject(i);
+						JSONArray photos = place.getJSONArray("photos");
+						JSONObject firstPhoto = photos.getJSONObject(0);
+						String photoReference = firstPhoto.getString("photo_reference");
+						String photoUrl = photoRequestOne + photoReference + photoRequestTwo + API_KEY;
+						result.add(photoUrl);
+					}
 
 					return result;
 				} catch (Exception e) {
 					return Collections.emptyList();
 				}
 			}
+			
 			
 			@Override
 			protected void onPostExecute(List<String> result) {
@@ -81,7 +75,13 @@ public class JsonParser {
 		}.execute();
 	}
 }
-	
+
+//private static final String PLACE_FEED_URL = "https://picasaweb.google.com/"
+//+ "data/feed/base/user/"
+//+ "116526417878498972096/albumid/5750911813501865489?kind=photo"
+//+ "&authkey=Gv1sRgCIHapMbBmI-VuAE&alt=json"
+//+ "&fields=entry(media:group(media:content,media:thumbnail))";
+//	
 //	public void parse(final ParseCompleteCallback parseCompleteCallback) {
 //		new AsyncTask<Void, Void, List<String>>() {
 //			

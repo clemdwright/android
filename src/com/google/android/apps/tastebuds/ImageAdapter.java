@@ -19,7 +19,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
-public class PlaceAdapter extends BaseAdapter {
+public class ImageAdapter extends BaseAdapter {
 	private final Context context;
 	private List<String> imageUrls = new ArrayList<String>();
 	private final LruCache<String, Bitmap> imageCache = new LruCache<String, Bitmap>(
@@ -30,7 +30,7 @@ public class PlaceAdapter extends BaseAdapter {
 		this.imageUrls = imageUrls;
 	}
 
-	public PlaceAdapter(Context c) {
+	public ImageAdapter(Context c) {
 		context = c;
 	}
 
@@ -65,7 +65,7 @@ public class PlaceAdapter extends BaseAdapter {
 			return imageView;
 		}
 		String imageUrl = imageUrls.get(position);
-		
+
 		Bitmap bitmap = imageCache.get(imageUrl);
 		if (bitmap != null) {
 			imageView.setImageBitmap(bitmap);
@@ -75,7 +75,7 @@ public class PlaceAdapter extends BaseAdapter {
 				new DownloadImageAsyncTask(imageUrl).execute();
 			}
 		}
-		
+
 		return imageView;
 	}
 
@@ -86,16 +86,17 @@ public class PlaceAdapter extends BaseAdapter {
 			this.imageUrl = imageUrl;
 		}
 
-//		@Override
-//		protected void onPreExecute() {
-//			Log.i("DownloadImageAsyncTask", "Starting image download task...");
-//		}
+		// @Override
+		// protected void onPreExecute() {
+		// Log.i("DownloadImageAsyncTask", "Starting image download task...");
+		// }
 
 		@Override
 		protected Void doInBackground(Void... params) {
 			try {
-				Bitmap bitmap = BitmapFactory.decodeStream((InputStream) new URL(
-						imageUrl).getContent());
+				Bitmap bitmap = BitmapFactory
+						.decodeStream((InputStream) new URL(imageUrl)
+								.getContent());
 				imageCache.put(imageUrl, bitmap);
 			} catch (IOException e) {
 				Log.e("DownloadImageAsyncTask", "Error reading bitmap", e);
